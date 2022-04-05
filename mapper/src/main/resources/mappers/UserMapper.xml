@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gonghr.fmmall.dao.UserDAO">
+
+    <insert id="insertUser">
+        insert into users(username, password, user_regtime, user_modtime)
+        values (#{username}, #{password}, #{userRegtime}, #{userModtime})
+    </insert>
+
+    <resultMap id="userMap" type="User">
+        <id column="user_id" property="userId"></id>
+        <result column="username" property="username"></result>
+        <result column="password" property="password"></result>
+        <result column="nickname" property="nickname"></result>
+        <result column="realname" property="realname"></result>
+        <result column="user_img" property="userImg"></result>
+        <result column="user_mobile" property="userMobile"></result>
+        <result column="user_email" property="userEmail"></result>
+        <result column="user_sex" property="userSex"></result>
+        <result column="user_birth" property="userBirth"></result>
+        <result column="user_regtime" property="userRegtime"></result>
+        <result column="user_modtime" property="userModtime"></result>
+    </resultMap>
+    <select id="queryUserByName" resultMap="userMap">
+        select user_id,
+               username,
+               password,
+               nickname,
+               realname,
+               user_img,
+               user_mobile,
+               user_email,
+               user_sex,
+               user_birth,
+               user_regtime,
+               user_modtime
+        from users
+        where username = #{name}
+    </select>
+</mapper>

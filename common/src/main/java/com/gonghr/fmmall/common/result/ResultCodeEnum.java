@@ -6,6 +6,9 @@ import lombok.Getter;
  */
 @Getter
 public enum ResultCodeEnum {
+    REGISTER_SUCCESS(10000, "注册成功"),
+    REGISTER_FAILURE(10002, "注册失败"),
+    REGISTER_FAILURE_OTHERS(10001, "⽤户名已经被注册"),
     SUCCESS(200,"成功"),
     FAIL(201, "失败"),
     PARAM_ERROR( 202, "参数不正确"),

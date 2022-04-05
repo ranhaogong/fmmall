@@ -2,11 +2,11 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.gonghr.fmmall.dao.UserDAO">
+<mapper namespace="com.gonghr.fmmall.dao.UserDao">
 
     <insert id="insertUser">
-        insert into users(username, password, user_regtime, user_modtime)
-        values (#{username}, #{password}, #{userRegtime}, #{userModtime})
+        insert into users(username, password, user_img, user_regtime, user_modtime)
+        values (#{username}, #{password}, #{userImg}, #{userRegtime}, #{userModtime})
     </insert>
 
     <resultMap id="userMap" type="User">

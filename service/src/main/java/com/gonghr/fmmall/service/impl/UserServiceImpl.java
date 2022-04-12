@@ -32,13 +32,13 @@ public class UserServiceImpl implements UserService {
                 user.setUserModtime(new Date());
                 int i = userDao.insertUser(user);
                 if(i > 0) {
-                    return new Result(10000, "注册成功", null);
+                    return new Result(ResultCodeEnum.REGISTER_SUCCESS);
                 } else {
-                    return new Result(10002, "注册失败", null);
+                    return new Result(ResultCodeEnum.REGISTER_FAILURE);
                 }
             }
             else {
-                return new Result(10001, "用户名已被注册", null);
+                return new Result(ResultCodeEnum.REGISTER_FAILURE_OTHERS);
             }
         }
     }
@@ -47,15 +47,15 @@ public class UserServiceImpl implements UserService {
     public Result checkLogin(String username, String password) {
         User user = userDao.queryUserByName(username);
         if(user == null) {
-            return new Result(10001, "登录失败，⽤户名不存在！", null);
+            return new Result(ResultCodeEnum.LOGIN_FAILURE_NO_USERNAME);
         }
         else {
             String md5 = MD5Utils.md5(password);
             if(md5.equals(user.getPassword())){
-                return new Result(10000, "登陆成功！", user);
+                return new Result(ResultCodeEnum.LOGIN_SUCCESS, user);
             }
             else {
-                return new Result(10001, "登录失败，密码错误！", null);
+                return new Result(ResultCodeEnum.LOGIN_FAILURE_WRONG_PASSWORD);
             }
         }
     }

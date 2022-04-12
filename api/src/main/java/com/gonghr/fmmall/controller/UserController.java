@@ -2,6 +2,7 @@ package com.gonghr.fmmall.controller;
 
 import com.gonghr.fmmall.common.result.Result;
 import com.gonghr.fmmall.dao.UserDao;
+import com.gonghr.fmmall.entity.User;
 import com.gonghr.fmmall.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/user")
 @Api(value = "管理用户的登录，注册", tags = "用户管理")
+@CrossOrigin
 public class UserController {
 
     @Autowired
@@ -37,8 +39,8 @@ public class UserController {
             @ApiImplicitParam(dataType = "string", name = "username", value = "⽤户注册账号", required = true),
             @ApiImplicitParam(dataType = "string", name = "password", value = "⽤户注册密码", required = true)})
     @PostMapping("/register")
-    public Result regist(String username, String password) {
-        Result result = userService.userRegister(username, password);
+    public Result regist(@RequestBody User user) {
+        Result result = userService.userRegister(user.getUsername(), user.getPassword());
         return result;
     }
 }

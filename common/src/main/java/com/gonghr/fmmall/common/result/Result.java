@@ -22,11 +22,16 @@ public class Result<T> {
 
     public Result(){}
 
-    public Result(Integer code, String message, T data) {
-        this.code = code;
-        this.message = message;
+    public Result(ResultCodeEnum resultCodeEnum, T data) {
+        this.code = resultCodeEnum.getCode();
+        this.message = resultCodeEnum.getMessage();
         this.data = data;
     }
+
+    public Result(ResultCodeEnum resultCodeEnum) {
+        this(resultCodeEnum, null);
+    }
+
 
     protected static <T> Result<T> build(T data) {
         Result<T> result = new Result<T>();
@@ -49,35 +54,35 @@ public class Result<T> {
         return result;
     }
 
-    public static<T> Result<T> ok(){
-        return Result.ok(null);
-    }
-
-    /**
-     * 操作成功
-     * @param data
-     * @param <T>
-     * @return
-     */
-    public static<T> Result<T> ok(T data){
-        Result<T> result = build(data);
-        return build(data, ResultCodeEnum.SUCCESS);
-    }
-
-    public static<T> Result<T> fail(){
-        return Result.fail(null);
-    }
-
-    /**
-     * 操作失败
-     * @param data
-     * @param <T>
-     * @return
-     */
-    public static<T> Result<T> fail(T data){
-        Result<T> result = build(data);
-        return build(data, ResultCodeEnum.FAIL);
-    }
+//    public static<T> Result<T> ok(){
+//        return Result.ok(null);
+//    }
+//
+//    /**
+//     * 操作成功
+//     * @param data
+//     * @param <T>
+//     * @return
+//     */
+//    public static<T> Result<T> ok(T data){
+//        Result<T> result = build(data);
+//        return build(data, ResultCodeEnum.SUCCESS);
+//    }
+//
+//    public static<T> Result<T> fail(){
+//        return Result.fail(null);
+//    }
+//
+//    /**
+//     * 操作失败
+//     * @param data
+//     * @param <T>
+//     * @return
+//     */
+//    public static<T> Result<T> fail(T data){
+//        Result<T> result = build(data);
+//        return build(data, ResultCodeEnum.FAIL);
+//    }
 
     public Result<T> message(String msg){
         this.setMessage(msg);
@@ -89,10 +94,10 @@ public class Result<T> {
         return this;
     }
 
-    public boolean isOk() {
-        if(this.getCode().intValue() == ResultCodeEnum.SUCCESS.getCode().intValue()) {
-            return true;
-        }
-        return false;
-    }
+//    public boolean isOk() {
+//        if(this.getCode().intValue() == ResultCodeEnum.SUCCESS.getCode().intValue()) {
+//            return true;
+//        }
+//        return false;
+//    }
 }

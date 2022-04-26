@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
                         .setIssuedAt(new Date())  // 设置token生成时间
                         .setId(user.getUserId() + "")  // 设置用户id为token的id
                         .setClaims(map)           // map中可以设置用户的权限信息
-                        .setExpiration(new Date(System.currentTimeMillis() +3000)) // 设置token过期时间
+                        .setExpiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)) // 设置token过期时间
                         .signWith(SignatureAlgorithm.HS256, "gonghr")
                         .compact();
 

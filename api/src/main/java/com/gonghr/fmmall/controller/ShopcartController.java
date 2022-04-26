@@ -6,6 +6,7 @@ import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/shopcart")
 public class ShopcartController {
 
+    @ApiOperation(value = "获取购物车信息")
     @ApiImplicitParam(dataType = "string", name = "token", value = "授权令牌", required = true)
     @GetMapping("/list")
     public Result listCarts(@RequestParam("userId") Integer userId) {

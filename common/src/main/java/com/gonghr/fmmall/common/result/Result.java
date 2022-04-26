@@ -22,6 +22,12 @@ public class Result<T> {
 
     public Result(){}
 
+    public Result(Integer code, String message, T data) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
+    }
+
     public Result(ResultCodeEnum resultCodeEnum, T data) {
         this.code = resultCodeEnum.getCode();
         this.message = resultCodeEnum.getMessage();

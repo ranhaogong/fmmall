@@ -6,11 +6,15 @@ import com.gonghr.fmmall.common.utils.MD5Utils;
 import com.gonghr.fmmall.dao.UserDao;
 import com.gonghr.fmmall.entity.User;
 import com.gonghr.fmmall.service.UserService;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.HashMap;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -52,7 +56,17 @@ public class UserServiceImpl implements UserService {
         else {
             String md5 = MD5Utils.md5(password);
             if(md5.equals(user.getPassword())){
-                return new Result(ResultCodeEnum.LOGIN_SUCCESS, user);
+                JwtBuilder builder = Jwts.builder();
+                HashMap<String, Object> map = new HashMap<>();
+                String token = builder.setSubject(username)      // 设置token携带的数据
+                        .setIssuedAt(new Date())  // 设置token生成时间
+                        .setId(user.getUserId() + "")  // 设置用户id为token的id
+                        .setClaims(map)           // map中可以设置用户的权限信息
+                        .setExpiration(new Date(System.currentTimeMillis() +3000)) // 设置token过期时间
+                        .signWith(SignatureAlgorithm.HS256, "gonghr")
+                        .compact();
+
+                return new Result(10000, token, user);
             }
             else {
                 return new Result(ResultCodeEnum.LOGIN_FAILURE_WRONG_PASSWORD);

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gonghr.fmmall.dao.IndexDao">
+    <resultMap id="indexImgMap" type="IndexImg">
+        <id column="img_id" property="imgId"></id>
+        <result column="img_url" property="imgUrl"></result>
+        <result column="img_bg_color" property="imgBgColor"></result>
+        <result column="prod_id" property="prodId"></result>
+        <result column="category_id" property="categoryId"></result>
+        <result column="index_type" property="indexType"></result>
+        <result column="seq" property="seq"></result>
+        <result column="status" property="status"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_time" property="updateTime"></result>
+    </resultMap>
+
+
+    <resultMap id="categoryVoMap" type="com.gonghr.fmmall.entity.CategoryVo">
+        <id column="category_id1" jdbcType="INTEGER" property="categoryId"></id>
+        <result column="category_name1" jdbcType="VARCHAR" property="categoryName"></result>
+        <result column="category_level1" jdbcType="VARCHAR" property="categoryLevel"></result>
+        <result column="parent_id1" jdbcType="INTEGER" property="parentId"></result>
+        <result column="category_icon1" jdbcType="VARCHAR" property="categoryIcon"></result>
+        <result column="category_slogan1" jdbcType="VARCHAR" property="categorySlogan"></result>
+        <result column="category_pic1" jdbcType="VARCHAR" property="categoryPic"></result>
+        <result column="category_bg_color1" jdbcType="VARCHAR" property="categoryBgColor"></result>
+        <collection property="categories" ofType="com.gonghr.fmmall.entity.CategoryVo">
+            <id column="category_id2" jdbcType="INTEGER" property="categoryId"></id>
+            <result column="category_name2" jdbcType="VARCHAR" property="categoryName"></result>
+            <result column="category_level2" jdbcType="VARCHAR" property="categoryLevel"></result>
+            <result column="parent_id2" jdbcType="INTEGER" property="parentId"></result>
+            <collection property="categories" ofType="com.gonghr.fmmall.entity.CategoryVo">
+                <id column="category_id3" jdbcType="INTEGER" property="categoryId"></id>
+                <result column="category_name3" jdbcType="VARCHAR" property="categoryName"></result>
+                <result column="category_level3" jdbcType="VARCHAR" property="categoryLevel"></result>
+                <result column="parent_id3" jdbcType="INTEGER" property="parentId"></result>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <resultMap id="categoryVoMap2" type="com.gonghr.fmmall.entity.CategoryVo">
+        <id column="category_id" jdbcType="INTEGER" property="categoryId"/>
+        <result column="category_name" jdbcType="VARCHAR" property="categoryName"/>
+        <result column="category_level" jdbcType="INTEGER" property="categoryLevel"/>
+        <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
+        <result column="category_icon" jdbcType="VARCHAR" property="categoryIcon"/>
+        <result column="category_slogan" jdbcType="VARCHAR" property="categorySlogan"/>
+        <result column="category_pic" jdbcType="VARCHAR" property="categoryPic"/>
+        <result column="category_bg_color" jdbcType="VARCHAR" property="categoryBgColor"/>
+        <collection property="categories" column="category_id"
+                    select="com.gonghr.fmmall.dao.IndexDao.selectAllCategory2"/>
+    </resultMap>
+
+    <select id="selectAllIndexImg" resultMap="indexImgMap">
+        select img_id,
+               img_url,
+               img_bg_color,
+               prod_id,
+               category_id,
+               index_type,
+               seq,
+               status,
+               create_time,
+               update_time
+        from index_img
+    </select>
+
+
+    <select id="selectAllCategory" resultMap="categoryVoMap">
+        select c1.category_id       category_id1,
+               c1.category_name     category_name1,
+               c1.category_level    category_level1,
+               c1.parent_id         parent_id1,
+               c1.category_icon     category_icon1,
+               c1.category_slogan   category_slogan1,
+               c1.category_pic      category_pic1,
+               c1.category_bg_color category_bg_color1,
+               c2.category_id       category_id2,
+               c2.category_name     category_name2,
+               c2.category_level    category_level2,
+               c2.parent_id         parent_id2,
+               c3.category_id       category_id3,
+               c3.category_name     category_name3,
+               c3.category_level    category_level3,
+               c3.parent_id         parent_id3
+        from category c1
+                 join category c2
+                      on c1.category_id = c2.parent_id
+                 left join category c3
+                           on c2.category_id = c3.parent_id
+        where c1.category_level = 1
+    </select>
+
+    <select id="selectAllCategory2" resultMap="categoryVoMap2">
+        select category_id,
+               category_name,
+               category_level,
+               parent_id,
+               category_icon,
+               category_slogan,
+               category_pic,
+               category_bg_color
+        from category
+        where parent_id = #{parentId}
+    </select>
+</mapper>

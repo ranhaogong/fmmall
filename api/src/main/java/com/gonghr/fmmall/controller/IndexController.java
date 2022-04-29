@@ -37,4 +37,11 @@ public class IndexController {
     public Result listCatetory2(){
         return indexService.getAllCategory2();
     }
+
+
+    @GetMapping("/list-recommends")
+    @ApiOperation("查询推荐商品接⼝")
+    public Result listRecommendProducts() {
+        return indexService.getRecommendProducts();
+    }
 }

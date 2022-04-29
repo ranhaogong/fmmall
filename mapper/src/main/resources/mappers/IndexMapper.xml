@@ -12,8 +12,8 @@
         <result column="index_type" property="indexType"></result>
         <result column="seq" property="seq"></result>
         <result column="status" property="status"></result>
-        <result column="create_time" property="createTime"></result>
-        <result column="update_time" property="updateTime"></result>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"></result>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"></result>
     </resultMap>
 
 
@@ -53,6 +53,29 @@
                     select="com.gonghr.fmmall.dao.IndexDao.selectAllCategory2"/>
     </resultMap>
 
+    <resultMap id="productVoMap" type="com.gonghr.fmmall.entity.ProductVo">
+        <id property="productId" jdbcType="VARCHAR" column="product_id"></id>
+        <result column="product_name" jdbcType="VARCHAR" property="productName"></result>
+        <result column="category_id" jdbcType="VARCHAR" property="categoryId"></result>
+        <result column="root_category_id" jdbcType="VARCHAR" property="rootCategoryId"></result>
+        <result column="sold_num" jdbcType="INTEGER" property="soldNum"></result>
+        <result column="product_status" jdbcType="INTEGER" property="productStatus"></result>
+        <result column="content" jdbcType="LONGVARCHAR" property="content"></result>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"></result>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"></result>
+        <collection property="imgs" select="com.gonghr.fmmall.dao.IndexDao.selectProductImgByProductId"
+                    column="product_id"></collection>
+    </resultMap>
+    
+    <resultMap id="productImgMap" type="com.gonghr.fmmall.entity.ProductImg">
+        <id column="id" jdbcType="VARCHAR" property="id"></id>
+        <result column="item_id" jdbcType="VARCHAR" property="itemId"></result>
+        <result column="url" jdbcType="VARCHAR" property="url"></result>
+        <result column="sort" jdbcType="INTEGER" property="sort"></result>
+        <result column="is_main" jdbcType="INTEGER" property="isMain"></result>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"></result>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"></result>
+    </resultMap>
     <select id="selectAllIndexImg" resultMap="indexImgMap">
         select img_id,
                img_url,
@@ -104,5 +127,34 @@
                category_bg_color
         from category
         where parent_id = #{parentId}
+    </select>
+
+    <select id="selectRecommendProducts" resultMap="productVoMap">
+        select
+            product_id,
+            product_name,
+            category_id,
+            root_category_id,
+            sold_num,
+            product_status,
+            content,
+            create_time,
+            update_time
+        from product
+        order by create_time desc
+        limit 0, 3
+    </select>
+
+    <select id="selectProductImgByProductId" resultMap="productImgMap">
+        select
+            id,
+            item_id,
+            url,
+            sort,
+            is_main,
+            created_time,
+            updated_time
+        from product_img
+        where item_id = #{id}
     </select>
 </mapper>

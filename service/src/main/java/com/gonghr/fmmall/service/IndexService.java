@@ -10,4 +10,5 @@ public interface IndexService {
 
     public Result getAllCategory2();
 
+    public Result getRecommendProducts();
 }

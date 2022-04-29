@@ -1,7 +1,6 @@
 package com.gonghr.fmmall.dao;
 
-import com.gonghr.fmmall.entity.CategoryVo;
-import com.gonghr.fmmall.entity.IndexImg;
+import com.gonghr.fmmall.entity.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,4 +13,8 @@ public interface IndexDao {
     public List<CategoryVo> selectAllCategory();
 
     public List<CategoryVo> selectAllCategory2(int parentId);
+
+    public List<ProductVo> selectRecommendProducts();
+
+    public List<ProductImg> selectProductImgByProductId(String id);
 }

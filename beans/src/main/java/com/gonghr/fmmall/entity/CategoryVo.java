@@ -20,4 +20,5 @@ public class CategoryVo {
     private String categoryPic;
     private String categoryBgColor;
     private List<CategoryVo> categories;
+    private List<Product> products;
 }

@@ -17,4 +17,8 @@ public interface IndexDao {
     public List<ProductVo> selectRecommendProducts();
 
     public List<ProductImg> selectProductImgByProductId(String id);
+
+    public List<Product> selectTopSixProductsByCategoryId(int cid);
+
+    public List<CategoryVo> selectAllCategoryAndTopSixProducts();
 }

@@ -46,4 +46,11 @@ public class IndexServiceImpl implements IndexService {
         Result result = new Result(ResultCodeEnum.SUCCESS, list);
         return result;
     }
+
+    @Override
+    public Result getAllCategoryAndTopSixProducts() {
+        List<CategoryVo> list = indexDao.selectAllCategoryAndTopSixProducts();
+        Result result = new Result(ResultCodeEnum.SUCCESS, list);
+        return result;
+    }
 }

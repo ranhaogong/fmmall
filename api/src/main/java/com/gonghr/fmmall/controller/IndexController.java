@@ -44,4 +44,10 @@ public class IndexController {
     public Result listRecommendProducts() {
         return indexService.getRecommendProducts();
     }
+
+    @GetMapping("/category-recommends")
+    @ApiOperation("分类推荐商品接⼝")
+    public Result listRecommendProductsByCategory() {
+        return indexService.getAllCategoryAndTopSixProducts();
+    }
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gonghr.fmmall.dao.ProductDao">
+<resultMap id="productMap" type="com.gonghr.fmmall.entity.Product">
+    <id property="productId" jdbcType="VARCHAR" column="product_id"></id>
+    <result column="product_name" jdbcType="VARCHAR" property="productName"></result>
+    <result column="category_id" jdbcType="VARCHAR" property="categoryId"></result>
+    <result column="root_category_id" jdbcType="VARCHAR" property="rootCategoryId"></result>
+    <result column="sold_num" jdbcType="INTEGER" property="soldNum"></result>
+    <result column="product_status" jdbcType="INTEGER" property="productStatus"></result>
+    <result column="content" jdbcType="LONGVARCHAR" property="content"></result>
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"></result>
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"></result>
+</resultMap>
+<select id="queryProductById" resultMap="productMap">
+    select * from product where product_id = #{productId} and product_status = 1
+</select>
+
+</mapper>

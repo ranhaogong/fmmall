@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gonghr.fmmall.dao.ProductImgDao">
+<resultMap id="ProductImgMap" type="com.gonghr.fmmall.entity.ProductImg">
+    <id column="id" property="id"></id>
+    <result column="item_id" property="itemId"></result>
+    <result column="url" property="url"></result>
+    <result column="sort" property="sort"></result>
+    <result column="is_main" property="isMain"></result>
+    <result column="create_time" property="createTime"></result>
+    <result column="update_time" property="updateTime"></result>
+</resultMap>
+<select id="queryProductImgById" resultMap="ProductImgMap">
+    select * from product_img where item_id = #{productId}
+</select>
+
+</mapper>

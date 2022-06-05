@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gonghr.fmmall.dao.ProductCommentsDao">
+    <resultMap id="ProductCommentsMap" type="com.gonghr.fmmall.entity.ProductCommentsVo">
+        <id column="comm_id" property="commId"></id>
+        <result column="product_id" property="productId"></result>
+        <result column="product_name" property="productName"></result>
+        <result column="order_item_id" property="orderItemId"></result>
+        <result column="is_anonymous" property="isAnonymous"></result>
+        <result column="comm_type" property="commType"></result>
+        <result column="comm_level" property="commLevel"></result>
+        <result column="comm_content" property="commContent"></result>
+        <result column="comm_imgs" property="commImgs"></result>
+        <result column="sepc_name" property="sepcName"></result>
+        <result column="reply_status" property="replyStatus"></result>
+        <result column="reply_content" property="replyContent"></result>
+        <result column="relpy_time" property="replyTime"></result>
+        <result column="is_show" property="isShow"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="username" property="username"></result>
+        <result column="nickname" property="nickname"></result>
+        <result column="user_img" property="userImg"></result>
+    </resultMap>
+    <select id="queryProductCommentsById" resultMap="ProductCommentsMap">
+        select c.comm_id,
+               c.product_id,
+               c.product_name,
+               c.order_item_id,
+               c.is_anonymous,
+               c.comm_type,
+               c.comm_level,
+               c.comm_content,
+               c.comm_imgs,
+               c.sepc_name,
+               c.reply_status,
+               c.reply_content,
+               c.reply_time,
+               c.is_show,
+               u.user_id,
+               u.username,
+               u.nickname,
+               u.user_img
+        from product_comments c
+        inner join users u
+        on u.user_id = c.user_id
+        where c.product_id = #{productId}
+    </select>
+</mapper>

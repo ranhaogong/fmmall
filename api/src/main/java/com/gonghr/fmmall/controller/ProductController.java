@@ -5,6 +5,8 @@ import com.gonghr.fmmall.service.ProductCommentsService;
 import com.gonghr.fmmall.service.ProductParamsService;
 import com.gonghr.fmmall.service.ProductService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +40,18 @@ public class ProductController {
 
     @ApiOperation("商品评论查询接口")
     @GetMapping("/detail-comments/{pid}")
-    public Result getProductComments(@PathVariable("pid") String pid) {
-        return productCommentsService.getProductCommentsById(pid);
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int", name = "pageNum", value = "当前页码", required = true),
+            @ApiImplicitParam(dataType = "int", name = "limit", value = "每页显示条数", required = true)
+    })
+    public Result getProductComments(@PathVariable("pid") String pid, int pageNum, int limit) {
+        return productCommentsService.getProductCommentsById(pid, pageNum, limit);
     }
+
+    @ApiOperation("商品评论统计信息查询接口")
+    @GetMapping("/detail-commentscount/{pid}")
+    public Result getProductCommentsCount(@PathVariable("pid") String pid) {
+        return productCommentsService.getCommentsCountByProductId(pid);
+    }
+
 }

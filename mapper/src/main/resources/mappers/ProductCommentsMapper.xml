@@ -46,5 +46,18 @@
         inner join users u
         on u.user_id = c.user_id
         where c.product_id = #{productId}
+        limit #{start}, #{limit}
+    </select>
+    <select id="queryCountProductCommentsById" resultType="java.lang.Integer">
+        select count(*) from product_comments where product_id = #{productId}
+    </select>
+    <select id="queryCountGoodProductCommentsById" resultType="java.lang.Integer">
+        select count(*) from product_comments where product_id = #{productId} and comm_type = 1
+    </select>
+    <select id="queryCountBadProductCommentsById" resultType="java.lang.Integer">
+        select count(*) from product_comments where product_id = #{productId} and comm_type = -1
+    </select>
+    <select id="queryCountMidProductCommentsById" resultType="java.lang.Integer">
+        select count(*) from product_comments where product_id = #{productId} and comm_type = 0
     </select>
 </mapper>

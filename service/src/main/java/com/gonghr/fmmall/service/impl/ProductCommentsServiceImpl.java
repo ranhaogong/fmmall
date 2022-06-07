@@ -39,8 +39,10 @@ public class ProductCommentsServiceImpl implements ProductCommentsService {
         int midTotal = productCommentsDao.queryCountMidProductCommentsById(productId);
         int badTotal = productCommentsDao.queryCountBadProductCommentsById(productId);
         int total = productCommentsDao.queryCountProductCommentsById(productId);
-        double percent = (Double.parseDouble(goodTotal + "") / Double.parseDouble(total + "")) * 100;
-        String percentValue = (percent + "").substring(0, (percent + "").lastIndexOf(".") + 3);
+//        double percent = (Double.parseDouble(goodTotal + "") / Double.parseDouble(total + "")) * 100;
+        double percent = (double) goodTotal / total * 100;
+//        String percentValue = (percent + "").substring(0, (percent + "").lastIndexOf(".") + 3);
+        String percentValue = String.format("%.2f", percent);
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("total", total);
         map.put("goodTotal", goodTotal);

@@ -10,10 +10,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class Category {
-    private int categoryId;
+    private Integer categoryId;
     private String categoryName;
-    private int categoryLevel;
-    private int parentId;
+    private Integer categoryLevel;
+    private Integer parentId;
     private String categoryIcon;
     private String categorySlogan;
     private String categoryPic;

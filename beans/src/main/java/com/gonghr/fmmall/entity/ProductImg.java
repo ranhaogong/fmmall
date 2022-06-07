@@ -15,8 +15,8 @@ public class ProductImg {
     private String id;
     private String itemId;
     private String url;
-    private int sort;
-    private int isMain;
+    private Integer sort;
+    private Integer isMain;
     private Date createTime;
     private Date updateTime;
 }

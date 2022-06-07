@@ -17,9 +17,9 @@ public class IndexImg {
     private String imgBgColor;
     private String prodId;
     private String categoryId;
-    private int indexType;
-    private int seq;
-    private int status;
+    private Integer indexType;
+    private Integer seq;
+    private Integer status;
     private Date createTime;
     private Date updateTime;
 }

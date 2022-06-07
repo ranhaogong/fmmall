@@ -14,10 +14,10 @@ import java.util.Date;
 public class Product {
     private String productId;
     private String productName;
-    private int categoryId;
-    private int rootCategoryId;
-    private int soldNum;
-    private int productStatus;
+    private Integer categoryId;
+    private Integer rootCategoryId;
+    private Integer soldNum;
+    private Integer productStatus;
     private String content;
     private Date createTime;
     private Date updateTime;

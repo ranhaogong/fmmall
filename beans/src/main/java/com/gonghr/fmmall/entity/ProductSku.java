@@ -17,11 +17,11 @@ public class ProductSku {
     private String skuName;
     private String skuImg;
     private String untitled;
-    private int originalPrice;
-    private int sellPrice;
-    private double discounts;
-    private int stock;
+    private Integer originalPrice;
+    private Integer sellPrice;
+    private Double discounts;
+    private Integer stock;
     private Date createTime;
     private Date updateTime;
-    private int status;
+    private Integer status;
 }

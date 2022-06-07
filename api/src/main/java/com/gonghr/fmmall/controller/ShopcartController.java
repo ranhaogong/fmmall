@@ -2,6 +2,8 @@ package com.gonghr.fmmall.controller;
 
 import com.gonghr.fmmall.common.result.Result;
 import com.gonghr.fmmall.common.result.ResultCodeEnum;
+import com.gonghr.fmmall.entity.ShoppingCart;
+import com.gonghr.fmmall.service.ShoppingCartService;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.swagger.annotations.Api;
@@ -16,10 +18,29 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/shopcart")
 public class ShopcartController {
 
-    @ApiOperation(value = "获取购物车信息")
-    @ApiImplicitParam(dataType = "string", name = "token", value = "授权令牌", required = true)
-    @GetMapping("/list")
-    public Result listCarts(@RequestParam("userId") Integer userId) {
-        return new Result(ResultCodeEnum.TEST, null);
+    @Autowired
+    private ShoppingCartService shoppingCartService;
+
+//    @ApiOperation(value = "获取购物车信息")
+//    @ApiImplicitParam(dataType = "string", name = "token", value = "授权令牌", required = true)
+//    @GetMapping("/list")
+//    public Result listCarts(@RequestParam("userId") Integer userId) {
+//        return new Result(ResultCodeEnum.TEST, null);
+//    }
+//
+
+    @ApiOperation(value = "添加购物车信息")
+    @ApiImplicitParam(dataType = "ShoppingCart", name = "shoppingCart", value = "购物车对象", required = true)
+    @PostMapping("/add")
+    public Result addShoppingCart(@RequestBody ShoppingCart shoppingCart, @RequestHeader("token") String token) {
+        return shoppingCartService.addShoppingCart(shoppingCart);
     }
+
+    @GetMapping("/list")
+    @ApiOperation(value = "查看购物车列表信息")
+    @ApiImplicitParam(dataType = "int", name = "userId", value = "用户ID", required = true)
+    public Result listShoppingCart(Integer userId, @RequestHeader("token") String token) {
+        return shoppingCartService.listShoppingCart(userId);
+    }
+
 }

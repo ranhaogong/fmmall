@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gonghr.fmmall.dao.ShoppingCartDao">
+    <resultMap id="ShoppingCartMap" type="com.gonghr.fmmall.entity.ShoppingCart">
+        <id column="cart_Id" property="cartId" jdbcType="INTEGER"></id>
+        <result column="product_id" property="productId" jdbcType="VARCHAR"></result>
+        <result column="sku_id" property="skuId" jdbcType="VARCHAR"></result>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"></result>
+        <result column="cart_num" property="cartNum" jdbcType="VARCHAR"></result>
+        <result column="cart_time" property="cartTime" jdbcType="TIMESTAMP"></result>
+        <result column="product_price" property="productPrice" jdbcType="DECIMAL"></result>
+        <result column="sku_props" property="skuProps" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <resultMap id="ShoppingCartVoMap" type="com.gonghr.fmmall.entity.ShoppingCartVo">
+        <id column="cart_Id" property="cartId" jdbcType="INTEGER"></id>
+        <result column="product_id" property="productId" jdbcType="VARCHAR"></result>
+        <result column="sku_id" property="skuId" jdbcType="VARCHAR"></result>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"></result>
+        <result column="cart_num" property="cartNum" jdbcType="VARCHAR"></result>
+        <result column="cart_time" property="cartTime" jdbcType="TIMESTAMP"></result>
+        <result column="product_price" property="productPrice" jdbcType="DECIMAL"></result>
+        <result column="sku_props" property="skuProps" jdbcType="VARCHAR"></result>
+        <result column="product_name" property="productName" jdbcType="VARCHAR"></result>
+        <result column="url" property="productImg" jdbcType="VARCHAR"></result>
+        <result column="original_price" property="originalPrice" jdbcType="VARCHAR"></result>
+        <result column="sell_price" property="sellPrice" jdbcType="VARCHAR"></result>
+        <result column="sku_name" property="skuName" jdbcType="VARCHAR"></result>
+    </resultMap>
+    <insert id="insertShoppingCart">
+        insert into shopping_cart(cart_id, product_id, sku_id, user_id, cart_num, cart_time, product_price, sku_props)
+        values (#{cartId}, #{productId}, #{skuId}, #{userId}, #{cartNum}, #{cartTime}, #{productPrice}, #{skuProps})
+    </insert>
+
+    <select id="listShoppingCart" resultMap="ShoppingCartVoMap">
+        select c.cart_id, c.product_id, c.sku_id, c.user_id, c.cart_num, c.cart_time, c.product_price, c.sku_props, p.product_name,i.url, s.original_price, s.sell_price, s.sku_name
+        from shopping_cart c
+                 INNER JOIN product p
+                 INNER JOIN product_img i
+                 INNER JOIN product_sku s
+                            ON c.product_id = p.product_id and i.item_id=p.product_id and c.sku_id = s.sku_id
+        where user_id=#{userId} and i.is_main=1;
+    </select>
+</mapper>

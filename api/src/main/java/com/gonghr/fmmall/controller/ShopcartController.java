@@ -8,6 +8,7 @@ import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -43,4 +44,21 @@ public class ShopcartController {
         return shoppingCartService.listShoppingCart(userId);
     }
 
+    @PutMapping("/update/{cid}/{cnum}")
+    @ApiOperation(value = "修改购物车列表信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "int", name = "cartId", value = "购物车ID", required = true),
+            @ApiImplicitParam(dataType = "int", name = "cartNum", value = "修改后的值", required = true)}
+    )
+    public Result updateShoppingCart(@PathVariable("cid") Integer cartId, @PathVariable("cnum") Integer cartNum, @RequestHeader("token") String token) {
+        return shoppingCartService.updateShoppingCart(cartId, cartNum);
+    }
+
+    @GetMapping("/listbycids")
+    @ApiOperation(value = "查询购物⻋记录信息")
+    @ApiImplicitParam(dataType = "String", name = "cids", value = "选择的购物⻋记录id", required = true)
+    public Result listByCids(String cids, @RequestHeader("token") String token) {
+        Result result = shoppingCartService.listShoppingCartByIds(cids);
+        return result;
+    }
 }

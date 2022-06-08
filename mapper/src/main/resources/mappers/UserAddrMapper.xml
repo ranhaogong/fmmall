@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gonghr.fmmall.dao.UserAddrDao">
+    <resultMap id="UserAddrMap" type="com.gonghr.fmmall.entity.UserAddr">
+        <id column="addr_id" property="addrId" jdbcType="VARCHAR"></id>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"></result>
+        <result column="receiver_name" property="receiverName" jdbcType="VARCHAR"></result>
+        <result column="receiver_mobile" property="receiverMobile" jdbcType="VARCHAR"></result>
+        <result column="province" property="province" jdbcType="VARCHAR"></result>
+        <result column="city" property="city" jdbcType="VARCHAR"></result>
+        <result column="area" property="area" jdbcType="VARCHAR"></result>
+        <result column="addr" property="addr" jdbcType="VARCHAR"></result>
+        <result column="post_code" property="postCode" jdbcType="VARCHAR"></result>
+        <result column="status" property="status" jdbcType="INTEGER"></result>
+        <result column="common_addr" property="commonAddr" jdbcType="INTEGER"></result>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"></result>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"></result>
+    </resultMap>
+    <select id="queryUserAddrById" resultMap="UserAddrMap">
+        select addr_id, user_id, receiver_name, receiver_mobile, province, city, area, addr, post_code, status, common_addr, create_time, update_time
+        from user_addr where user_id = #{userId} and status = 1
+    </select>
+</mapper>

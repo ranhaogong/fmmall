@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,5 +37,27 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public Result listShoppingCart(Integer userId) {
         List<ShoppingCartVo> list = shoppingCartDao.listShoppingCart(userId);
         return new Result(ResultCodeEnum.SUCCESS, list);
+    }
+
+    @Override
+    public Result updateShoppingCart(Integer cartId, Integer cartNum) {
+        int i = shoppingCartDao.updateShoppingCart(cartId, cartNum);
+        if (i > 0) {
+            return new Result(ResultCodeEnum.SUCCESS, null);
+        } else {
+            return new Result(ResultCodeEnum.FAIL, null);
+        }
+    }
+
+    @Override
+    public Result listShoppingCartByIds(String cids) {
+        String[] split = cids.split(",");
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        for (String s : split) {
+            list.add(Integer.parseInt(s));
+        }
+        List<ShoppingCartVo> shoppingCartVos = shoppingCartDao.listShoppingCartByIds(list);
+
+        return new Result(ResultCodeEnum.SUCCESS, shoppingCartVos);
     }
 }

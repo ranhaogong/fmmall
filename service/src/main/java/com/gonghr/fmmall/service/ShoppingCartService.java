@@ -8,4 +8,8 @@ public interface ShoppingCartService {
     public Result addShoppingCart(ShoppingCart shoppingCart);
 
     public Result listShoppingCart(Integer userId);
+
+    public Result updateShoppingCart(Integer cartId, Integer cartNum);
+
+    public Result listShoppingCartByIds(String cids);
 }

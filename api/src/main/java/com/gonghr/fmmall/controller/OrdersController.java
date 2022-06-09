@@ -1,0 +1,55 @@
+package com.gonghr.fmmall.controller;
+
+import com.github.wxpay.sdk.WXPay;
+import com.gonghr.fmmall.common.result.Result;
+import com.gonghr.fmmall.common.result.ResultCodeEnum;
+import com.gonghr.fmmall.config.MyPayConfig;
+import com.gonghr.fmmall.entity.Orders;
+import com.gonghr.fmmall.service.OrdersService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
+@CrossOrigin
+@RequestMapping("/order")
+public class OrdersController {
+
+    @Autowired
+    private OrdersService ordersService;
+
+    @PostMapping("/add")
+    public Result add(String cids, @RequestBody Orders orders) {
+        Result result = null;
+        try {
+            Map<String, String> orderInfo = ordersService.addOrder(cids, orders);
+            String orderId = orderInfo.get("orderId");
+            if (orderId != null) {
+                //设置当前订单信息
+                HashMap<String, String> data = new HashMap<>();
+                data.put("body", orderInfo.get("productNames")); //商品描述
+                data.put("out_trade_no", orderId); //使⽤当前⽤户订单的编号作为当前⽀付交易的交易号
+                data.put("fee_type", "CNY"); //⽀付币种
+                data.put("total_fee", orders.getActualAmount() * 100 + ""); //⽀付⾦额
+                data.put("trade_type", "NATIVE"); //交易类型
+                data.put("notify_url", "/pay/callback"); //设置⽀付完成时的回调⽅法接⼝
+                //发送请求，获取响应
+                //微信⽀付：申请⽀付连接
+                WXPay wxPay = new WXPay(new MyPayConfig());
+                Map<String, String> resp = wxPay.unifiedOrder(data);
+                orderInfo.put("payUrl", resp.get("code_url"));
+                result = new Result(ResultCodeEnum.SUBMIT_ORDER_SUCCESS, orderInfo);
+            } else {
+                result = new Result(ResultCodeEnum.SUBMIT_ORDER_FAILURE, null);
+            }
+        } catch (SQLException e) {
+            result = new Result(ResultCodeEnum.SUBMIT_ORDER_FAILURE, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+}

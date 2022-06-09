@@ -8,7 +8,7 @@
         <result column="product_id" property="productId" jdbcType="VARCHAR"></result>
         <result column="sku_id" property="skuId" jdbcType="VARCHAR"></result>
         <result column="user_id" property="userId" jdbcType="VARCHAR"></result>
-        <result column="cart_num" property="cartNum" jdbcType="VARCHAR"></result>
+        <result column="cart_num" property="cartNum" jdbcType="INTEGER"></result>
         <result column="cart_time" property="cartTime" jdbcType="TIMESTAMP"></result>
         <result column="product_price" property="productPrice" jdbcType="DECIMAL"></result>
         <result column="sku_props" property="skuProps" jdbcType="VARCHAR"></result>
@@ -19,7 +19,7 @@
         <result column="product_id" property="productId" jdbcType="VARCHAR"></result>
         <result column="sku_id" property="skuId" jdbcType="VARCHAR"></result>
         <result column="user_id" property="userId" jdbcType="VARCHAR"></result>
-        <result column="cart_num" property="cartNum" jdbcType="VARCHAR"></result>
+        <result column="cart_num" property="cartNum" jdbcType="INTEGER"></result>
         <result column="cart_time" property="cartTime" jdbcType="TIMESTAMP"></result>
         <result column="product_price" property="productPrice" jdbcType="DECIMAL"></result>
         <result column="sku_props" property="skuProps" jdbcType="VARCHAR"></result>
@@ -28,6 +28,23 @@
         <result column="original_price" property="originalPrice" jdbcType="VARCHAR"></result>
         <result column="sell_price" property="sellPrice" jdbcType="VARCHAR"></result>
         <result column="sku_name" property="skuName" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <resultMap id="ShoppingCartVoMap2" type="com.gonghr.fmmall.entity.ShoppingCartVo">
+        <id column="cart_Id" property="cartId" jdbcType="INTEGER"></id>
+        <result column="product_id" property="productId" jdbcType="VARCHAR"></result>
+        <result column="sku_id" property="skuId" jdbcType="VARCHAR"></result>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"></result>
+        <result column="cart_num" property="cartNum" jdbcType="INTEGER"></result>
+        <result column="cart_time" property="cartTime" jdbcType="TIMESTAMP"></result>
+        <result column="product_price" property="productPrice" jdbcType="DECIMAL"></result>
+        <result column="sku_props" property="skuProps" jdbcType="VARCHAR"></result>
+        <result column="product_name" property="productName" jdbcType="VARCHAR"></result>
+        <result column="url" property="productImg" jdbcType="VARCHAR"></result>
+        <result column="original_price" property="originalPrice" jdbcType="VARCHAR"></result>
+        <result column="sell_price" property="sellPrice" jdbcType="VARCHAR"></result>
+        <result column="sku_name" property="skuName" jdbcType="VARCHAR"></result>
+            <result column="stock" property="stock" jdbcType="INTEGER"></result>
     </resultMap>
     <insert id="insertShoppingCart">
         insert into shopping_cart(cart_id, product_id, sku_id, user_id, cart_num, cart_time, product_price, sku_props)
@@ -46,8 +63,8 @@
     <update id="updateShoppingCart">
         update shopping_cart set cart_num = #{cartNum} where cart_id = #{cartId}
     </update>
-    <select id="listShoppingCartByIds" resultMap="ShoppingCartVoMap">
-        select c.cart_id, c.product_id, c.sku_id, c.user_id, c.cart_num, c.cart_time, c.product_price, c.sku_props, p.product_name,i.url, s.original_price, s.sell_price, s.sku_name
+    <select id="listShoppingCartByIds" resultMap="ShoppingCartVoMap2">
+        select c.cart_id, c.product_id, c.sku_id, c.user_id, c.cart_num, c.cart_time, c.product_price, c.sku_props, p.product_name,i.url, s.original_price, s.sell_price, s.sku_name, s.stock
         from shopping_cart c
                  INNER JOIN product p
                  INNER JOIN product_img i
@@ -58,4 +75,7 @@
             #{cid}
         </foreach>
     </select>
+    <delete id="deleteByPrimaryKey">
+        delete from shopping_cart where cart_id = #{cid}
+    </delete>
 </mapper>

@@ -16,7 +16,7 @@ public class ShoppingCart {
     private String productId;
     private String skuId;
     private String userId;
-    private String cartNum;
+    private Integer cartNum;
     private Date cartTime;
     private Double productPrice;
     private String skuProps;

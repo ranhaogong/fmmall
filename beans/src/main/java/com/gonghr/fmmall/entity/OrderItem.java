@@ -6,24 +6,24 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ShoppingCartVo {
-    private Integer cartId;
+public class OrderItem {
+    private String itemId;
+    private String orderId;
     private String productId;
-    private String skuId;
-    private String userId;
-    private Integer cartNum;
-    private String cartTime;
-    private BigDecimal productPrice;
-    private String skuProps;
     private String productName;
     private String productImg;
-    private Double originalPrice;
-    private Double sellPrice;
+    private String skuId;
     private String skuName;
-    private Integer stock;
+    private BigDecimal productPrice;
+    private Integer buyCounts;
+    private BigDecimal totalAmount;
+    private Date basketDate;
+    private Date buyTime;
+    private Integer isComment;
 }

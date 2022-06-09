@@ -13,5 +13,6 @@ public interface ShoppingCartDao {
     public List<ShoppingCartVo> listShoppingCart(Integer userId);
     public int updateShoppingCart(@Param("cartId") Integer cartId, @Param("cartNum") Integer cartNum);
     public List<ShoppingCartVo> listShoppingCartByIds(List<Integer> cids);
+    public int deleteByPrimaryKey(Integer cid);
 }
 

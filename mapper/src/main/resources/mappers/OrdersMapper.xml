@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gonghr.fmmall.dao.OrdersDao">
+
+    <insert id="insertOrders">
+        insert into orders(order_id,
+                           user_id,
+                           untitled,
+                           receiver_name,
+                           receiver_mobile,
+                           receiver_address,
+                           total_amount,
+                           actual_amount,
+                           pay_type,
+                           order_remark,
+                           status,
+                           delivery_type,
+                           delivery_flow_id,
+                           order_freight,
+                           delete_status,
+                           create_time,
+                           update_time,
+                           pay_time,
+                           delivery_time,
+                           flish_time,
+                           cancel_time,
+                           close_type)
+        values (#{orderId},
+                #{userId},
+                #{untitled},
+                #{receiverName},
+                #{receiverMobile},
+                #{receiverAddress},
+                #{totalAmount},
+                #{actualAmount},
+                #{payType},
+                #{orderRemark},
+                #{status},
+                #{deliveryType},
+                #{deliveryFlowId},
+                #{orderFreight},
+                #{deleteStatus},
+                #{createTime},
+                #{updateTime},
+                #{payTime},
+                #{deliveryTime},
+                #{flishTime},
+                #{cancelTime},
+                #{closeType})
+    </insert>
+</mapper>

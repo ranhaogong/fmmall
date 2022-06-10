@@ -6,6 +6,10 @@ import com.gonghr.fmmall.common.result.ResultCodeEnum;
 import com.gonghr.fmmall.config.MyPayConfig;
 import com.gonghr.fmmall.entity.Orders;
 import com.gonghr.fmmall.service.OrdersService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +20,14 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 @RequestMapping("/order")
+@Api(value = "订单管理相关接口", tags = "订单管理")
 public class OrdersController {
 
     @Autowired
     private OrdersService ordersService;
 
     @PostMapping("/add")
+    @ApiOperation("添加订单")
     public Result add(String cids, @RequestBody Orders orders) {
         Result result = null;
         try {
@@ -33,9 +39,10 @@ public class OrdersController {
                 data.put("body", orderInfo.get("productNames")); //商品描述
                 data.put("out_trade_no", orderId); //使⽤当前⽤户订单的编号作为当前⽀付交易的交易号
                 data.put("fee_type", "CNY"); //⽀付币种
-                data.put("total_fee", orders.getActualAmount() * 100 + ""); //⽀付⾦额
+//                data.put("total_fee", orders.getActualAmount().doubleValue() * 100 + ""); //⽀付⾦额
+                data.put("total_fee", "1"); //⽀付⾦额
                 data.put("trade_type", "NATIVE"); //交易类型
-                data.put("notify_url", "/pay/callback"); //设置⽀付完成时的回调⽅法接⼝
+                data.put("notify_url", "http://fmmall.5gzvip.91tunnel.com/pay/callback"); //设置⽀付完成时的回调⽅法接⼝
                 //发送请求，获取响应
                 //微信⽀付：申请⽀付连接
                 WXPay wxPay = new WXPay(new MyPayConfig());
@@ -51,5 +58,14 @@ public class OrdersController {
             e.printStackTrace();
         }
         return result;
+    }
+
+    @ApiOperation("根据订单ID查询订单状态信息")
+    @GetMapping("/status/{oid}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "string", name = "token", value = "token", required = true),
+    })
+    public Result getOrdersStatus(@PathVariable("oid") String orderId, @RequestHeader("token") String token) {
+       return ordersService.queryOrdersById(orderId);
     }
 }

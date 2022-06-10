@@ -1,6 +1,7 @@
 package com.gonghr.fmmall.service.impl;
 
 import com.gonghr.fmmall.common.result.Result;
+import com.gonghr.fmmall.common.result.ResultCodeEnum;
 import com.gonghr.fmmall.dao.OrderItemDao;
 import com.gonghr.fmmall.dao.OrdersDao;
 import com.gonghr.fmmall.dao.ProductSkuDao;
@@ -92,5 +93,16 @@ public class OrdersServiceImpl implements OrdersService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public int updateOrderStatus(String orderId, String status) {
+        return ordersDao.updateOrderStatus(orderId, status);
+    }
+
+    @Override
+    public Result queryOrdersById(String orderId) {
+        Orders orders = ordersDao.queryOrdersById(orderId);
+        return new Result(ResultCodeEnum.SUCCESS, orders.getStatus());
     }
 }

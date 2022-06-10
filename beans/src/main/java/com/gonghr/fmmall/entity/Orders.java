@@ -20,7 +20,7 @@ public class Orders {
     private String receiverMobile;
     private String receiverAddress;
     private BigDecimal totalAmount;
-    private Integer actualAmount;
+    private BigDecimal actualAmount;
     private Integer payType;
     private String orderRemark;
     private String status;

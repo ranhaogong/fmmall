@@ -55,7 +55,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         String[] split = cids.split(",");
         ArrayList<Integer> list = new ArrayList<Integer>();
         for (String s : split) {
-            System.out.println(s);
             list.add(Integer.parseInt(s));
         }
         List<ShoppingCartVo> shoppingCartVos = shoppingCartDao.listShoppingCartByIds(list);

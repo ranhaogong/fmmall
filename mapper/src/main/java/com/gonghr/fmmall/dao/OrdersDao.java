@@ -7,4 +7,8 @@ import org.springframework.stereotype.Repository;
 public interface OrdersDao {
 
     public int insertOrders(Orders orders);
+
+    int updateOrderStatus(String orderId, String status);
+
+    Orders queryOrdersById(String orderId);
 }

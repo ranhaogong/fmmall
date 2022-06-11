@@ -11,4 +11,6 @@ public interface OrdersService {
     public int updateOrderStatus(String orderId, String status);
 
     public Result queryOrdersById(String orderId);
+
+    public void closeOrder(String orderId);
 }

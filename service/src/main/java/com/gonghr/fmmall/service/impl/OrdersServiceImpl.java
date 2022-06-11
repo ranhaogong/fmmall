@@ -105,4 +105,18 @@ public class OrdersServiceImpl implements OrdersService {
         Orders orders = ordersDao.queryOrdersById(orderId);
         return new Result(ResultCodeEnum.SUCCESS, orders.getStatus());
     }
+
+    @Override
+    @Transactional()
+    public void closeOrder(String orderId) {
+        synchronized (this) {
+            ordersDao.updateOrderStatusAndCloseType(orderId, "6", 1);
+            List<OrderItem> orderItems = orderItemDao.queryOrderItemById(orderId);
+            for (OrderItem orderItem : orderItems) {
+                ProductSku productSku = productSkuDao.queryProductSkuBySkuId(orderItem.getSkuId());
+                productSku.setStock(productSku.getStock() + orderItem.getBuyCounts());
+                productSkuDao.updateByPrimaryKeySelective(productSku);
+            }
+        }
+    }
 }

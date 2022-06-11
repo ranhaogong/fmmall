@@ -10,4 +10,6 @@ public interface ProductSkuDao {
     public List<ProductSkuDao> queryProductSkuById(String productId);
 
     public int updateByPrimaryKeySelective(ProductSku productSku);
+
+    public ProductSku queryProductSkuBySkuId(String skuId);
 }

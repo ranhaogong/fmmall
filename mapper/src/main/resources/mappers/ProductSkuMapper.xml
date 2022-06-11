@@ -27,4 +27,9 @@
     <update id="updateByPrimaryKeySelective">
         update product_sku set stock = #{stock} where sku_id = #{skuId}
     </update>
+    <select id="queryProductSkuBySkuId" resultMap="ProductSkuMap">
+        select sku_id, product_id, sku_name, sku_img, untitled, original_price,
+               sell_price, discounts, stock, create_time, update_time, status
+        from product_sku where sku_id = #{skuId}
+    </select>
 </mapper>

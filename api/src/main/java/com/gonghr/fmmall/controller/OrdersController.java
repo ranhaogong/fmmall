@@ -3,7 +3,7 @@ package com.gonghr.fmmall.controller;
 import com.github.wxpay.sdk.WXPay;
 import com.gonghr.fmmall.common.result.Result;
 import com.gonghr.fmmall.common.result.ResultCodeEnum;
-import com.gonghr.fmmall.config.MyPayConfig;
+import com.gonghr.fmmall.service.job.MyPayConfig;
 import com.gonghr.fmmall.entity.Orders;
 import com.gonghr.fmmall.service.OrdersService;
 import io.swagger.annotations.Api;

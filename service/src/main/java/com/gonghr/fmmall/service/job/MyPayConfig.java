@@ -1,4 +1,4 @@
-package com.gonghr.fmmall.config;
+package com.gonghr.fmmall.service.job;
 
 import com.github.wxpay.sdk.WXPayConfig;
 

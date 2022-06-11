@@ -3,6 +3,21 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gonghr.fmmall.dao.OrderItemDao">
+    <resultMap id="OrderItemMap" type="com.gonghr.fmmall.entity.OrderItem">
+        <id column="item_id" jdbcType="VARCHAR" property="itemId"></id>
+        <result column="order_id" jdbcType="VARCHAR" property="orderId"></result>
+        <result column="product_id" jdbcType="VARCHAR" property="productId"></result>
+        <result column="product_name" jdbcType="VARCHAR" property="productName"></result>
+        <result column="product_img" jdbcType="VARCHAR" property="productImg"></result>
+        <result column="sku_id" jdbcType="VARCHAR" property="skuId"></result>
+        <result column="sku_name" jdbcType="VARCHAR" property="skuName"></result>
+        <result column="product_price" jdbcType="DECIMAL" property="productPrice"></result>
+        <result column="buy_counts" jdbcType="INTEGER" property="buyCounts"></result>
+        <result column="total_amount" jdbcType="DECIMAL" property="totalAmount"></result>
+        <result column="basket_date" jdbcType="TIMESTAMP" property="basketDate"></result>
+        <result column="buy_time" jdbcType="TIMESTAMP" property="buyTime"></result>
+        <result column="is_comment" jdbcType="INTEGER" property="isComment"></result>
+    </resultMap>
     <insert id="insertOrderItem">
         insert into order_item(item_id,
                                order_id,
@@ -31,4 +46,20 @@
                #{buyTime},
                #{isComment})
     </insert>
+    <select id="queryOrderItemById" resultMap="OrderItemMap">
+        select item_id,
+               order_id,
+               product_id,
+               product_name,
+               product_img,
+               sku_id,
+               sku_name,
+               product_price,
+               buy_counts,
+               total_amount,
+               basket_date,
+               buy_time,
+               is_comment
+        from order_item where order_id = #{orderId}
+    </select>
 </mapper>

@@ -23,4 +23,5 @@ public class ProductVo {
     private Date createTime;
     private Date updateTime;
     private List<ProductImg> imgs;
+    private List<ProductSku> skus;
 }

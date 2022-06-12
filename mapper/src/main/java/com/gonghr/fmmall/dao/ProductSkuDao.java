@@ -12,4 +12,6 @@ public interface ProductSkuDao {
     public int updateByPrimaryKeySelective(ProductSku productSku);
 
     public ProductSku queryProductSkuBySkuId(String skuId);
+
+    public List<ProductSku> queryLowestPriceByProductId(String productId);
 }

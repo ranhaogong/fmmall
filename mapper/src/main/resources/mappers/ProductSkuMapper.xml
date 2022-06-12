@@ -32,4 +32,10 @@
                sell_price, discounts, stock, create_time, update_time, status
         from product_sku where sku_id = #{skuId}
     </select>
+    <select id="queryLowestPriceByProductId" resultMap="ProductSkuMap">
+        select sku_id, product_id, sku_name, sku_img, untitled, original_price,
+               sell_price, discounts, stock, create_time, update_time, status
+        from product_sku where product_id = #{productId}
+        order by sell_price limit 0, 1
+    </select>
 </mapper>

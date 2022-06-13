@@ -27,6 +27,45 @@
         <result column="cancel_time" property="cancelTime" jdbcType="TIMESTAMP"></result>
         <result column="close_type" property="closeType" jdbcType="INTEGER"></result>
     </resultMap>
+    <resultMap id="OrdersVoMap" type="com.gonghr.fmmall.entity.OrdersVo">
+        <id column="order_id" property="orderId" jdbcType="VARCHAR"></id>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"></result>
+        <result column="untitled" property="untitled" jdbcType="VARCHAR"></result>
+        <result column="receiver_name" property="receiverName" jdbcType="VARCHAR"></result>
+        <result column="receiver_mobile" property="receiverMobile" jdbcType="VARCHAR"></result>
+        <result column="receiver_address" property="receiverAddress" jdbcType="VARCHAR"></result>
+        <result column="total_amount" property="totalAmount" jdbcType="DECIMAL"></result>
+        <result column="actual_amount" property="actualAmount" jdbcType="DECIMAL"></result>
+        <result column="pay_type" property="payType" jdbcType="INTEGER"></result>
+        <result column="order_remark" property="orderRemark" jdbcType="VARCHAR"></result>
+        <result column="status" property="status" jdbcType="VARCHAR"></result>
+        <result column="delivery_type" property="deliveryType" jdbcType="VARCHAR"></result>
+        <result column="delivery_flow_id" property="deliveryFlowId" jdbcType="VARCHAR"></result>
+        <result column="order_freight" property="orderFreight" jdbcType="DECIMAL"></result>
+        <result column="delete_status" property="deleteStatus" jdbcType="INTEGER"></result>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"></result>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"></result>
+        <result column="pay_time" property="payTime" jdbcType="TIMESTAMP"></result>
+        <result column="delivery_time" property="deliveryTime" jdbcType="TIMESTAMP"></result>
+        <result column="flish_time" property="flishTime" jdbcType="TIMESTAMP"></result>
+        <result column="cancel_time" property="cancelTime" jdbcType="TIMESTAMP"></result>
+        <result column="close_type" property="closeType" jdbcType="INTEGER"></result>
+        <collection property="orderItems" ofType="com.gonghr.fmmall.entity.OrderItem">
+            <result column="item_id" jdbcType="VARCHAR" property="itemId"></result>
+            <result column="item_order_id" jdbcType="VARCHAR" property="orderId"></result>
+            <result column="product_id" jdbcType="VARCHAR" property="productId"></result>
+            <result column="product_name" jdbcType="VARCHAR" property="productName"></result>
+            <result column="product_img" jdbcType="VARCHAR" property="productImg"></result>
+            <result column="sku_id" jdbcType="VARCHAR" property="skuId"></result>
+            <result column="sku_name" jdbcType="VARCHAR" property="skuName"></result>
+            <result column="product_price" jdbcType="DECIMAL" property="productPrice"></result>
+            <result column="buy_counts" jdbcType="INTEGER" property="buyCounts"></result>
+            <result column="item_total_amount" jdbcType="DECIMAL" property="totalAmount"></result>
+            <result column="basket_date" jdbcType="TIMESTAMP" property="basketDate"></result>
+            <result column="buy_time" jdbcType="TIMESTAMP" property="buyTime"></result>
+            <result column="is_comment" jdbcType="INTEGER" property="isComment"></result>
+        </collection>
+    </resultMap>
     <insert id="insertOrders">
         insert into orders(order_id,
                            user_id,
@@ -74,10 +113,15 @@
                 #{closeType})
     </insert>
     <update id="updateOrderStatus">
-        update orders set status = #{status} where order_id = #{orderId}
+        update orders
+        set status = #{status}
+        where order_id = #{orderId}
     </update>
     <update id="updateOrderStatusAndCloseType">
-        update orders set status = #{status} , close_type = #{closeType} where order_id = #{orderId}
+        update orders
+        set status     = #{status},
+            close_type = #{closeType}
+        where order_id = #{orderId}
     </update>
     <select id="queryOrdersById" resultMap="OrdersMap">
         select order_id,
@@ -102,7 +146,8 @@
                flish_time,
                cancel_time,
                close_type
-        from orders where order_id = #{orderId}
+        from orders
+        where order_id = #{orderId}
     </select>
 
     <select id="queryTimeoutJob" resultMap="OrdersMap">
@@ -128,6 +173,59 @@
                flish_time,
                cancel_time,
                close_type
-        from orders where status = 1 and create_time &lt; #{startTime}
+        from orders
+        where status = 1
+          and create_time &lt; #{startTime}
+    </select>
+    <select id="queryOrders" resultMap="OrdersVoMap">
+        select
+        o.order_id,
+        user_id,
+        untitled,
+        receiver_name,
+        receiver_mobile,
+        receiver_address,
+        o.total_amount,
+        actual_amount,
+        pay_type,
+        order_remark,
+        status,
+        delivery_type,
+        delivery_flow_id,
+        order_freight,
+        delete_status,
+        create_time,
+        update_time,
+        pay_time,
+        delivery_time,
+        flish_time,
+        cancel_time,
+        close_type,
+        item_id,
+        i.order_id item_order_id,
+        product_id,
+        product_name,
+        product_img,
+        sku_id,
+        sku_name,
+        product_price,
+        buy_counts,
+        i.total_amount item_total_amount,
+        basket_date,
+        buy_time,
+        is_comment
+        from orders o left JOIN order_item i ON o.order_id = i.order_id
+        <where>
+            o.user_id = #{userId}
+            <if test="status != null and status != ''">and o.status = #{status}</if>
+        </where>
+        limit #{start}, #{limit}
+    </select>
+    <select id="queryCountByUserIdAndStatus" resultType="java.lang.Integer">
+        select count(*) from orders
+            <where>
+                user_id = #{userId}
+                <if test="status != null and status !=''" >and status = #{status}</if>
+            </where>
     </select>
 </mapper>

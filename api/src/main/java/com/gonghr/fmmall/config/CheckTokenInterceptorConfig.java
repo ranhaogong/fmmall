@@ -18,6 +18,7 @@ public class CheckTokenInterceptorConfig implements WebMvcConfigurer {
                 .addPathPatterns("/shopcart/**")
                 .addPathPatterns("/orders/**")
                 .addPathPatterns("/useraddr/**")
+                .addPathPatterns("/user/check")
                 .excludePathPatterns("/user/**");
     }
 }

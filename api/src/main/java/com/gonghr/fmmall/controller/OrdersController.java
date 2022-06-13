@@ -68,4 +68,20 @@ public class OrdersController {
     public Result getOrdersStatus(@PathVariable("oid") String orderId, @RequestHeader("token") String token) {
        return ordersService.queryOrdersById(orderId);
     }
+
+    @ApiOperation("订单查询接口")
+    @GetMapping("/list")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "string", name = "userId", value = "用户ID", required = true),
+            @ApiImplicitParam(dataType = "string", name = "status", value = "订单状态"),
+            @ApiImplicitParam(dataType = "int", name = "pageNum", value = "页码", required = true),
+            @ApiImplicitParam(dataType = "int", name = "limit", value = "每页条数", required = true),
+    })
+    public Result getOrdersStatus(@RequestHeader("token") String token,
+                                  String userId,
+                                  String status,
+                                  Integer pageNum,
+                                  Integer limit) {
+        return ordersService.queryOrders(userId, status, pageNum, limit);
+    }
 }

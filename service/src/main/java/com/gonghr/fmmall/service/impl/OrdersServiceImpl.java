@@ -2,14 +2,12 @@ package com.gonghr.fmmall.service.impl;
 
 import com.gonghr.fmmall.common.result.Result;
 import com.gonghr.fmmall.common.result.ResultCodeEnum;
+import com.gonghr.fmmall.common.utils.PageHelper;
 import com.gonghr.fmmall.dao.OrderItemDao;
 import com.gonghr.fmmall.dao.OrdersDao;
 import com.gonghr.fmmall.dao.ProductSkuDao;
 import com.gonghr.fmmall.dao.ShoppingCartDao;
-import com.gonghr.fmmall.entity.OrderItem;
-import com.gonghr.fmmall.entity.Orders;
-import com.gonghr.fmmall.entity.ProductSku;
-import com.gonghr.fmmall.entity.ShoppingCartVo;
+import com.gonghr.fmmall.entity.*;
 import com.gonghr.fmmall.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -118,5 +116,15 @@ public class OrdersServiceImpl implements OrdersService {
                 productSkuDao.updateByPrimaryKeySelective(productSku);
             }
         }
+    }
+
+    @Override
+    public Result queryOrders(String userId, String status, int pageNum, int limit) {
+        int start = (pageNum - 1) * limit;
+        List<OrdersVo> ordersVos = ordersDao.queryOrders(userId, status, pageNum, limit);
+        int count = ordersDao.queryCountByUserIdAndStatus(userId, status);
+        int pageCount = count % limit == 0 ? count / limit : count / limit + 1;
+        PageHelper pageHelper = new PageHelper(count, pageCount, ordersVos);
+        return new Result(ResultCodeEnum.SUCCESS, pageHelper);
     }
 }

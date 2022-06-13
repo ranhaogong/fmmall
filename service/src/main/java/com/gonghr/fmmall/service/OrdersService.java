@@ -13,4 +13,6 @@ public interface OrdersService {
     public Result queryOrdersById(String orderId);
 
     public void closeOrder(String orderId);
+
+    public Result queryOrders(String userId, String status, int pageNum, int limit);
 }

@@ -1,6 +1,7 @@
 package com.gonghr.fmmall.controller;
 
 import com.gonghr.fmmall.common.result.Result;
+import com.gonghr.fmmall.common.result.ResultCodeEnum;
 import com.gonghr.fmmall.entity.User;
 import com.gonghr.fmmall.service.UserService;
 import io.swagger.annotations.Api;
@@ -40,5 +41,11 @@ public class UserController {
     public Result regist(@RequestBody User user) {
         Result result = userService.userRegister(user.getUsername(), user.getPassword());
         return result;
+    }
+
+    @ApiOperation("校验token是否过期接⼝")
+    @GetMapping("/check")
+    public Result userTokenCheck(@RequestHeader("token") String token) {
+        return new Result(ResultCodeEnum.SUCCESS, null);
     }
 }

@@ -1,6 +1,7 @@
 # fmmall
 锋迷商城
 前后端分离的后端代码
+项目体验地址：http://www.fmmall.top
 项目视频资源地址：https://www.bilibili.com/video/BV12p4y187Dj?p=1&vd_source=48118c7a80f2b975b629d1c983c73ad0
 
 ## 项目运行

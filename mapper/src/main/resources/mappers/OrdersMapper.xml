@@ -50,20 +50,7 @@
         <result column="flish_time" property="flishTime" jdbcType="TIMESTAMP"></result>
         <result column="cancel_time" property="cancelTime" jdbcType="TIMESTAMP"></result>
         <result column="close_type" property="closeType" jdbcType="INTEGER"></result>
-        <collection property="orderItems" ofType="com.gonghr.fmmall.entity.OrderItem">
-            <result column="item_id" jdbcType="VARCHAR" property="itemId"></result>
-            <result column="item_order_id" jdbcType="VARCHAR" property="orderId"></result>
-            <result column="product_id" jdbcType="VARCHAR" property="productId"></result>
-            <result column="product_name" jdbcType="VARCHAR" property="productName"></result>
-            <result column="product_img" jdbcType="VARCHAR" property="productImg"></result>
-            <result column="sku_id" jdbcType="VARCHAR" property="skuId"></result>
-            <result column="sku_name" jdbcType="VARCHAR" property="skuName"></result>
-            <result column="product_price" jdbcType="DECIMAL" property="productPrice"></result>
-            <result column="buy_counts" jdbcType="INTEGER" property="buyCounts"></result>
-            <result column="item_total_amount" jdbcType="DECIMAL" property="totalAmount"></result>
-            <result column="basket_date" jdbcType="TIMESTAMP" property="basketDate"></result>
-            <result column="buy_time" jdbcType="TIMESTAMP" property="buyTime"></result>
-            <result column="is_comment" jdbcType="INTEGER" property="isComment"></result>
+        <collection property="orderItems" column="order_id" select="com.gonghr.fmmall.dao.OrderItemDao.queryOrderItemById">
         </collection>
     </resultMap>
     <insert id="insertOrders">
@@ -179,13 +166,13 @@
     </select>
     <select id="queryOrders" resultMap="OrdersVoMap">
         select
-        o.order_id,
+        order_id,
         user_id,
         untitled,
         receiver_name,
         receiver_mobile,
         receiver_address,
-        o.total_amount,
+        total_amount,
         actual_amount,
         pay_type,
         order_remark,
@@ -200,24 +187,11 @@
         delivery_time,
         flish_time,
         cancel_time,
-        close_type,
-        item_id,
-        i.order_id item_order_id,
-        product_id,
-        product_name,
-        product_img,
-        sku_id,
-        sku_name,
-        product_price,
-        buy_counts,
-        i.total_amount item_total_amount,
-        basket_date,
-        buy_time,
-        is_comment
-        from orders o left JOIN order_item i ON o.order_id = i.order_id
+        close_type
+        from orders
         <where>
-            o.user_id = #{userId}
-            <if test="status != null and status != ''">and o.status = #{status}</if>
+            user_id = #{userId}
+            <if test="status != null and status != ''">and status = #{status}</if>
         </where>
         limit #{start}, #{limit}
     </select>

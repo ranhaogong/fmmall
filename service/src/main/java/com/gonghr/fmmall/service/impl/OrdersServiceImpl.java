@@ -121,7 +121,7 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public Result queryOrders(String userId, String status, int pageNum, int limit) {
         int start = (pageNum - 1) * limit;
-        List<OrdersVo> ordersVos = ordersDao.queryOrders(userId, status, pageNum, limit);
+        List<OrdersVo> ordersVos = ordersDao.queryOrders(userId, status, start, limit);
         int count = ordersDao.queryCountByUserIdAndStatus(userId, status);
         int pageCount = count % limit == 0 ? count / limit : count / limit + 1;
         PageHelper pageHelper = new PageHelper(count, pageCount, ordersVos);

@@ -42,7 +42,7 @@ public class OrdersController {
 //                data.put("total_fee", orders.getActualAmount().doubleValue() * 100 + ""); //⽀付⾦额
                 data.put("total_fee", "1"); //⽀付⾦额
                 data.put("trade_type", "NATIVE"); //交易类型
-                data.put("notify_url", "http://43.138.23.109:8080/pay/callback"); //设置⽀付完成时的回调⽅法接⼝
+                data.put("notify_url", "http://ip:port/pay/callback"); //设置⽀付完成时的回调⽅法接⼝
                 //发送请求，获取响应
                 //微信⽀付：申请⽀付连接
                 WXPay wxPay = new WXPay(new MyPayConfig());
